@@ -14,6 +14,8 @@
 		9CA2152E280F69AF0064772F /* CrudOperationCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9CA2152C280F69AF0064772F /* CrudOperationCoreData.xcdatamodeld */; };
 		9CA21530280F69B10064772F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CA2152F280F69B10064772F /* Assets.xcassets */; };
 		9CA21533280F69B10064772F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CA21531280F69B10064772F /* LaunchScreen.storyboard */; };
+		9CBB091E281388B000F79EAB /* Task+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBB091C281388B000F79EAB /* Task+CoreDataClass.swift */; };
+		9CBB091F281388B000F79EAB /* Task+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBB091D281388B000F79EAB /* Task+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		9CA2152F280F69B10064772F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9CA21532280F69B10064772F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9CA21534280F69B10064772F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CBB091C281388B000F79EAB /* Task+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9CBB091D281388B000F79EAB /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,8 @@
 		9CA21522280F69AF0064772F /* CrudOperationCoreData */ = {
 			isa = PBXGroup;
 			children = (
+				9CBB091C281388B000F79EAB /* Task+CoreDataClass.swift */,
+				9CBB091D281388B000F79EAB /* Task+CoreDataProperties.swift */,
 				9CA21523280F69AF0064772F /* AppDelegate.swift */,
 				9CA21525280F69AF0064772F /* SceneDelegate.swift */,
 				9CA21527280F69AF0064772F /* ViewController.swift */,
@@ -142,8 +148,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CA2152E280F69AF0064772F /* CrudOperationCoreData.xcdatamodeld in Sources */,
+				9CBB091E281388B000F79EAB /* Task+CoreDataClass.swift in Sources */,
 				9CA21528280F69AF0064772F /* ViewController.swift in Sources */,
 				9CA21524280F69AF0064772F /* AppDelegate.swift in Sources */,
+				9CBB091F281388B000F79EAB /* Task+CoreDataProperties.swift in Sources */,
 				9CA21526280F69AF0064772F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

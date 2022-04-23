@@ -15,7 +15,10 @@ class ViewController: UIViewController {
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
 //        addToDoTask()
 //        fetchTaskFromCoreData()
-        deleteTaskFromCoreData()
+//        deleteTaskFromCoreData()
+//        addTododTaskWithObjectOrientedWay()
+//        fetchTaskWithObjectOrientedWay()
+        deleteTaskWithObjectOrientedWay()
     }
 
     func addToDoTask() {
@@ -90,6 +93,76 @@ class ViewController: UIViewController {
         } catch let error as NSError {
             print("Could not fetch \(error)")
         }
+    }
+    
+    func addTododTaskWithObjectOrientedWay() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create a TodoList object
+        let todoObject = Task(context: managedObjectContext)
+        todoObject.name = "Fisrt Item"
+        todoObject.details = "First Item Description"
+        todoObject.id = 1
+        
+        //Save to persistent Store
+        do {
+            try managedObjectContext.save()
+        } catch let error as NSError {
+            print("could not save \(error)")
+        }
+    }
+    
+    func fetchTaskWithObjectOrientedWay() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create fetch Request
+        let fetchRequest = NSFetchRequest<Task>(entityName: "Task")
+        
+        do {
+            let tasks = try managedObjectContext.fetch(fetchRequest)
+            
+            for data in tasks {
+                print(data.details ?? "No data found")
+            }
+        } catch let error as NSError {
+            print("Could not fetch. \(error)")
+        }
+    }
+    
+    func deleteTaskWithObjectOrientedWay() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create fetch Request
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
+        
+        do {
+            let tasks = try managedObjectContext.fetch(fetchRequest)
+            
+            for task in tasks {
+                managedObjectContext.delete(task)
+            }
+            
+            do {
+                try managedObjectContext.save()
+            } catch let error as NSError {
+                print("Could not save, \(error)")
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
+        }
+
     }
 
 }
