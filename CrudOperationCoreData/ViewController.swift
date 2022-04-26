@@ -21,7 +21,9 @@ class ViewController: UIViewController {
 //        deleteTaskWithObjectOrientedWay()
 //        addTodoTaskWithEntityHavingRelationshipWithOtherEntityObjectOrientedWay()
 //        fetchTaskFromCoreDataWithObjectEntityHavingRelationshipWithOtherEntityOrientedWay()
-        deleteTaskFromCoreDataWithObjectEntityHavingRelationshipWithOtherEntity()
+//        deleteTaskFromCoreDataWithObjectEntityHavingRelationshipWithOtherEntity()
+//        addUser()
+        addThreeTodoTasks()
     }
 
     func addToDoTask() {
@@ -274,6 +276,68 @@ class ViewController: UIViewController {
             
         } catch let error as NSError {
             print("Could not fetch \(error)")
+        }
+    }
+    
+    func addUser() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create a User Object
+        let user = User(context: managedObjectContext)
+        user.secondName = "User Second Name"
+        
+        print("User First Name \(String(describing: user.firstName))")
+        user.userId = 123
+        user.firstName = "This contains more than 12 characters"
+        
+        do {
+            try managedObjectContext.save()
+        } catch let error as NSError {
+            print("Could not save \(error)")
+        }
+    }
+    
+    func addThreeTodoTasks() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create a first todo object
+//        let todoObjectOne = Task(context: managedObjectContext)
+//        todoObjectOne.name = "First item"
+//        todoObjectOne.details = "First item Description"
+//        todoObjectOne.id = 1
+        
+        //Create a second todo object
+//        let todoObjectSecond = Task(context: managedObjectContext)
+//        todoObjectSecond.name = "Second item"
+//        todoObjectSecond.details = "Second item Description"
+//        todoObjectSecond.id = 2
+        
+        //Create a third todo object
+//        let todoObjectThird = Task(context: managedObjectContext)
+//        todoObjectThird.name = "Third item"
+//        todoObjectThird.details = "Third item Description"
+//        todoObjectThird.id = 3
+        
+        //Create a User object
+        let user = User(context: managedObjectContext)
+        user.firstName = "first name of the user"
+        user.secondName = "Second"
+        user.userId = 123
+        
+//        user.tasks = NSSet.init(array: [todoObjectOne,todoObjectSecond,todoObjectThird])
+        
+        do {
+            try managedObjectContext.save()
+        } catch let error as NSError {
+            print("Could not save \(error)")
         }
     }
 
