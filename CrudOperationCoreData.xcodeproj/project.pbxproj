@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9CA1E74028175A0E00633F7D /* Task+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA1E73A28175A0E00633F7D /* Task+CoreDataClass.swift */; };
+		9CA1E74128175A0E00633F7D /* Task+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA1E73B28175A0E00633F7D /* Task+CoreDataProperties.swift */; };
+		9CA1E74228175A0E00633F7D /* Passport+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA1E73C28175A0E00633F7D /* Passport+CoreDataClass.swift */; };
+		9CA1E74328175A0E00633F7D /* Passport+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA1E73D28175A0E00633F7D /* Passport+CoreDataProperties.swift */; };
+		9CA1E74428175A0E00633F7D /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA1E73E28175A0E00633F7D /* User+CoreDataClass.swift */; };
+		9CA1E74528175A0E00633F7D /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA1E73F28175A0E00633F7D /* User+CoreDataProperties.swift */; };
 		9CA21524280F69AF0064772F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA21523280F69AF0064772F /* AppDelegate.swift */; };
 		9CA21526280F69AF0064772F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA21525280F69AF0064772F /* SceneDelegate.swift */; };
 		9CA21528280F69AF0064772F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CA21527280F69AF0064772F /* ViewController.swift */; };
@@ -14,11 +20,15 @@
 		9CA2152E280F69AF0064772F /* CrudOperationCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9CA2152C280F69AF0064772F /* CrudOperationCoreData.xcdatamodeld */; };
 		9CA21530280F69B10064772F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CA2152F280F69B10064772F /* Assets.xcassets */; };
 		9CA21533280F69B10064772F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CA21531280F69B10064772F /* LaunchScreen.storyboard */; };
-		9CBB091E281388B000F79EAB /* Task+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBB091C281388B000F79EAB /* Task+CoreDataClass.swift */; };
-		9CBB091F281388B000F79EAB /* Task+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBB091D281388B000F79EAB /* Task+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9CA1E73A28175A0E00633F7D /* Task+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9CA1E73B28175A0E00633F7D /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9CA1E73C28175A0E00633F7D /* Passport+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Passport+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9CA1E73D28175A0E00633F7D /* Passport+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Passport+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9CA1E73E28175A0E00633F7D /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9CA1E73F28175A0E00633F7D /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9CA21520280F69AF0064772F /* CrudOperationCoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrudOperationCoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CA21523280F69AF0064772F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9CA21525280F69AF0064772F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -28,8 +38,6 @@
 		9CA2152F280F69B10064772F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9CA21532280F69B10064772F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9CA21534280F69B10064772F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9CBB091C281388B000F79EAB /* Task+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataClass.swift"; sourceTree = "<group>"; };
-		9CBB091D281388B000F79EAB /* Task+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,8 +70,12 @@
 		9CA21522280F69AF0064772F /* CrudOperationCoreData */ = {
 			isa = PBXGroup;
 			children = (
-				9CBB091C281388B000F79EAB /* Task+CoreDataClass.swift */,
-				9CBB091D281388B000F79EAB /* Task+CoreDataProperties.swift */,
+				9CA1E73A28175A0E00633F7D /* Task+CoreDataClass.swift */,
+				9CA1E73B28175A0E00633F7D /* Task+CoreDataProperties.swift */,
+				9CA1E73C28175A0E00633F7D /* Passport+CoreDataClass.swift */,
+				9CA1E73D28175A0E00633F7D /* Passport+CoreDataProperties.swift */,
+				9CA1E73E28175A0E00633F7D /* User+CoreDataClass.swift */,
+				9CA1E73F28175A0E00633F7D /* User+CoreDataProperties.swift */,
 				9CA21523280F69AF0064772F /* AppDelegate.swift */,
 				9CA21525280F69AF0064772F /* SceneDelegate.swift */,
 				9CA21527280F69AF0064772F /* ViewController.swift */,
@@ -148,10 +160,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9CA2152E280F69AF0064772F /* CrudOperationCoreData.xcdatamodeld in Sources */,
-				9CBB091E281388B000F79EAB /* Task+CoreDataClass.swift in Sources */,
+				9CA1E74328175A0E00633F7D /* Passport+CoreDataProperties.swift in Sources */,
+				9CA1E74028175A0E00633F7D /* Task+CoreDataClass.swift in Sources */,
 				9CA21528280F69AF0064772F /* ViewController.swift in Sources */,
 				9CA21524280F69AF0064772F /* AppDelegate.swift in Sources */,
-				9CBB091F281388B000F79EAB /* Task+CoreDataProperties.swift in Sources */,
+				9CA1E74428175A0E00633F7D /* User+CoreDataClass.swift in Sources */,
+				9CA1E74128175A0E00633F7D /* Task+CoreDataProperties.swift in Sources */,
+				9CA1E74228175A0E00633F7D /* Passport+CoreDataClass.swift in Sources */,
+				9CA1E74528175A0E00633F7D /* User+CoreDataProperties.swift in Sources */,
 				9CA21526280F69AF0064772F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

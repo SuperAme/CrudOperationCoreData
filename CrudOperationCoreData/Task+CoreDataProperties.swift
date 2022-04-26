@@ -2,7 +2,7 @@
 //  Task+CoreDataProperties.swift
 //  CrudOperationCoreData
 //
-//  Created by Américo MQ on 22/04/22.
+//  Created by Américo MQ on 25/04/22.
 //
 //
 
@@ -19,6 +19,7 @@ extension Task {
     @NSManaged public var details: String?
     @NSManaged public var id: Int32
     @NSManaged public var name: String?
+    @NSManaged public var ofUser: User?
 
 }
 

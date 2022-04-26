@@ -18,7 +18,10 @@ class ViewController: UIViewController {
 //        deleteTaskFromCoreData()
 //        addTododTaskWithObjectOrientedWay()
 //        fetchTaskWithObjectOrientedWay()
-        deleteTaskWithObjectOrientedWay()
+//        deleteTaskWithObjectOrientedWay()
+//        addTodoTaskWithEntityHavingRelationshipWithOtherEntityObjectOrientedWay()
+//        fetchTaskFromCoreDataWithObjectEntityHavingRelationshipWithOtherEntityOrientedWay()
+        deleteTaskFromCoreDataWithObjectEntityHavingRelationshipWithOtherEntity()
     }
 
     func addToDoTask() {
@@ -163,6 +166,115 @@ class ViewController: UIViewController {
             print("Could not fetch \(error)")
         }
 
+    }
+    
+    func addTodoTaskWithEntityHavingRelationshipWithOtherEntityObjectOrientedWay() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create a first todo object
+        let todoObjectOne = Task(context: managedObjectContext)
+        todoObjectOne.name = "First item"
+        todoObjectOne.details = "First item Description"
+        todoObjectOne.id = 1
+        
+        //Create a second todo object
+        let todoObjectSecond = Task(context: managedObjectContext)
+        todoObjectSecond.name = "Second item"
+        todoObjectSecond.details = "Second item Description"
+        todoObjectSecond.id = 1
+        
+        //Create a User Passport object
+        let userPassport = Passport(context: managedObjectContext)
+        userPassport.expiryDate = Date()
+        userPassport.number = "User Passport number"
+        
+        //Create a user object
+        let user = User(context: managedObjectContext)
+        user.firstName = "User First name"
+        user.secondName = "User second name"
+        user.userId = 123
+        
+        //Asign tasks to user
+        user.tasks = NSSet.init(array: [todoObjectOne,todoObjectSecond])
+        
+        //Asign passport to user objects
+        user.passport = userPassport
+        
+        //Save to persistent store
+        do {
+            try managedObjectContext.save()
+        } catch let error as NSError {
+            print("Could not save \(error)")
+        }
+    }
+    
+    func fetchTaskFromCoreDataWithObjectEntityHavingRelationshipWithOtherEntityOrientedWay() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //create fecth request
+        let fetchRequest = NSFetchRequest<Task>(entityName: "Task")
+        
+        do {
+            let tasks = try managedObjectContext.fetch(fetchRequest)
+            
+            for task in tasks {
+                print(task.details ?? "No data found")
+                
+                print(task.ofUser?.firstName ?? "No user first name")
+                
+                print(task.ofUser?.passport?.number ?? "No user Passport")
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
+        }
+    }
+    
+    func deleteTaskFromCoreDataWithObjectEntityHavingRelationshipWithOtherEntity() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //create fetch request
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "User")
+        
+        do {
+            let users = try managedObjectContext.fetch(fetchRequest)
+            
+            for user in users {
+                managedObjectContext.delete(user)
+            }
+            
+            //fetch task
+            let fetchRequestTask = NSFetchRequest<NSManagedObject>(entityName: "Task")
+            let tasks = try? managedObjectContext.fetch(fetchRequestTask)
+            print("task count \(String(describing: tasks?.count))")
+            
+            //fetch passport
+            let fetchRequestPassport = NSFetchRequest<NSManagedObject>(entityName: "Passport")
+            let passports = try? managedObjectContext.fetch(fetchRequestPassport)
+            print("passports count \(String(describing: passports?.count))")
+            
+            do {
+                try managedObjectContext.save()
+            } catch let error as NSError {
+                print("Could not save \(error)")
+            }
+            
+            
+            
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
+        }
     }
 
 }
