@@ -31,7 +31,12 @@ class ViewController: UIViewController {
 //        fetchRequestResultTypeManagedObject()
 //        fetchRequestResultTypeDictionary()
 //        fetchRequestResultCount()
-        fetchRequestResultObjectId()
+//        fetchRequestResultObjectId()
+//        fetchRequestFaulObjects()
+//        propertiesToFetch()
+//        fetchLimit()
+//        insertTenThousandsUserObject()
+        fetchUsingBatchWithLimitAndOffset()
     }
 
     func addToDoTask() {
@@ -547,6 +552,141 @@ class ViewController: UIViewController {
             for objectId in objectIds {
                 print(objectId)
                 print("\n\n\n")
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
+        }
+    }
+    
+    func fetchRequestFaulObjects() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create fetch request
+        let userFetchRequest = NSFetchRequest<User>(entityName: "User")
+        
+        //Define result type
+        userFetchRequest.returnsObjectsAsFaults = true
+        
+        do {
+            //Execute fetch request
+            let users: [User] = try managedObjectContext.fetch(userFetchRequest)
+            print("Printing Faul Data")
+            //print before fault fired
+            for user in users {
+                print("Object return \(user)")
+            }
+            //access any one property to fire fault
+            for user in users {
+                _ = user.firstName
+            }
+            print("\n\n\n\n\n Printing after fired fault")
+            //print after fault fired
+            for user in users {
+                print("Object return \(user)")
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
+        }
+    }
+    
+    func propertiesToFetch() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create fetch request
+        let userFetchRequest = NSFetchRequest<NSDictionary>(entityName: "User")
+        
+        userFetchRequest.propertiesToFetch = ["firstName"]
+        userFetchRequest.resultType = .dictionaryResultType
+        
+        do {
+            let users: [NSDictionary] = try managedObjectContext.fetch(userFetchRequest)
+            
+            for user in users {
+                print("Object Return \(user)")
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
+        }
+    }
+    
+    func fetchLimit() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create fetch request
+        let userFetchRequest = NSFetchRequest<User>(entityName: "User")
+        
+        userFetchRequest.fetchLimit = 2
+        userFetchRequest.returnsObjectsAsFaults = false
+        
+        do {
+            let users: [User] = try managedObjectContext.fetch(userFetchRequest)
+            
+            for user in users {
+                print("Object Return \(user)")
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
+        }
+    }
+    
+    func insertTenThousandsUserObject() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        for i in 0..<10000 {
+            let user = User(context: managedObjectContext)
+            user.secondName = "Second Name \(i)"
+            user.userId = Int64(i)
+            user.firstName = "First Name \(i)"
+        }
+        
+        do {
+            let startTime = CFAbsoluteTimeGetCurrent()
+            try managedObjectContext.save()
+            print("Saving the thousands of objects time \(CFAbsoluteTimeGetCurrent() - startTime)")
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
+        }
+    }
+    
+    func fetchUsingBatchWithLimitAndOffset() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create fetch Request
+        let userFetchRequest = NSFetchRequest<User>(entityName: "User")
+        var fetchOffSet = 0
+        userFetchRequest.fetchOffset = fetchOffSet
+        userFetchRequest.fetchLimit = 1000
+        
+        do {
+            var users: [User] = try managedObjectContext.fetch(userFetchRequest)
+            print("Users count \(users.count)")
+            
+            while users.count > 0 {
+                fetchOffSet = fetchOffSet + users.count
+                userFetchRequest.fetchOffset = fetchOffSet
+                users = try managedObjectContext.fetch(userFetchRequest)
+                
+                print("Users count \(users.count)")
             }
         } catch let error as NSError {
             print("Could not fetch \(error)")
