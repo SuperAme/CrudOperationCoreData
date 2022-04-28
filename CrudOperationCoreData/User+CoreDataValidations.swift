@@ -20,20 +20,20 @@ extension User {
         case InvalidUserFirstOrSecondName
     }
     
-    override public func validateForInsert() throws {
-        try super.validateForInsert()
-        guard let firstName = firstName else { throw NSError(domain: errorDomain, code: UserErrorType.InvalidUserFirstOrSecondName.rawValue, userInfo: [NSLocalizedDescriptionKey: "The User First Or Second Name cannot be greater tha 12 characters"]) }
-        
-        guard let secondName = secondName else { throw NSError(domain: errorDomain, code: UserErrorType.InvalidUserFirstOrSecondName.rawValue, userInfo: [NSLocalizedDescriptionKey: "The User First Or Second Name cannot be greater tha 12 characters"]) }
-        
-        if (firstName.count > 12 || secondName.count > 12) {
-            throw NSError(domain: errorDomain, code: UserErrorType.InvalidUserFirstOrSecondName.rawValue, userInfo: [NSLocalizedDescriptionKey: "The User First Or Second Name cannot be greater tha 12 characters"])
-        }
-    }
+//    override public func validateForInsert() throws {
+//        try super.validateForInsert()
+//        guard let firstName = firstName else { throw NSError(domain: errorDomain, code: UserErrorType.InvalidUserFirstOrSecondName.rawValue, userInfo: [NSLocalizedDescriptionKey: "The User First Or Second Name cannot be greater tha 12 characters"]) }
+//
+//        guard let secondName = secondName else { throw NSError(domain: errorDomain, code: UserErrorType.InvalidUserFirstOrSecondName.rawValue, userInfo: [NSLocalizedDescriptionKey: "The User First Or Second Name cannot be greater tha 12 characters"]) }
+//
+//        if (firstName.count > 52 || secondName.count > 52) {
+//            throw NSError(domain: errorDomain, code: UserErrorType.InvalidUserFirstOrSecondName.rawValue, userInfo: [NSLocalizedDescriptionKey: "The User First Or Second Name cannot be greater tha 12 characters"])
+//        }
+//    }
     
-    public override func validateForUpdate() throws {
-        try super.validateForUpdate()
-    }
+//    public override func validateForUpdate() throws {
+//        try super.validateForUpdate()
+//    }
     
 //    public override func validateValue(_ value: AutoreleasingUnsafeMutablePointer<AnyObject?>, forKey key: String) throws {
 //        if key == "secondName" {
@@ -57,4 +57,6 @@ extension User {
 //            }
 //        }
 //    }
+    
+    
 }

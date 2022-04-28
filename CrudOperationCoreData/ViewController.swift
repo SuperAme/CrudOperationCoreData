@@ -23,7 +23,15 @@ class ViewController: UIViewController {
 //        fetchTaskFromCoreDataWithObjectEntityHavingRelationshipWithOtherEntityOrientedWay()
 //        deleteTaskFromCoreDataWithObjectEntityHavingRelationshipWithOtherEntity()
 //        addUser()
-        addThreeTodoTasks()
+//        addThreeTodoTasks()
+//        addTwoUsers()
+//        fetchUserFromCoreDataWithPredicate()
+//        addThreeUsers()
+//        fetchUserFromCoreDataWithSortDescriptor()
+//        fetchRequestResultTypeManagedObject()
+//        fetchRequestResultTypeDictionary()
+//        fetchRequestResultCount()
+        fetchRequestResultObjectId()
     }
 
     func addToDoTask() {
@@ -338,6 +346,210 @@ class ViewController: UIViewController {
             try managedObjectContext.save()
         } catch let error as NSError {
             print("Could not save \(error)")
+        }
+    }
+    
+    func addTwoUsers() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create Users object
+        
+        let user = User(context: managedObjectContext)
+        user.secondName = "User one Second Name"
+        user.firstName = "Ali"
+        
+        let secondUser = User(context: managedObjectContext)
+        secondUser.secondName = "User Two Second Name"
+        secondUser.firstName = "Not Ali"
+        
+        do {
+            try managedObjectContext.save()
+        } catch let error as NSError {
+            print("Could not save \(error)")
+        }
+    }
+    
+    func fetchUserFromCoreDataWithPredicate() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create fetch request
+        let userFetchRequest = NSFetchRequest<User>(entityName: "User")
+        
+        //Filter using predicate
+        userFetchRequest.predicate = NSPredicate(format: "firstName == %@", "Ali")
+        
+        do {
+            let users = try managedObjectContext.fetch(userFetchRequest)
+            print("Users Count \(users.count)")
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
+        }
+    }
+    
+    func addThreeUsers() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create Users object
+        
+        let user = User(context: managedObjectContext)
+        user.secondName = "Vijay"
+        user.firstName = "Kumar"
+        
+        let secondUser = User(context: managedObjectContext)
+        secondUser.secondName = "Subhan"
+        secondUser.firstName = "Ali"
+        
+        let thirdUSer = User(context: managedObjectContext)
+        thirdUSer.secondName = "Akhtar"
+        thirdUSer.firstName = "Ali"
+        
+        do {
+            try managedObjectContext.save()
+        } catch let error as NSError {
+            print("Could not save \(error)")
+        }
+    }
+    
+    func fetchUserFromCoreDataWithSortDescriptor() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create fetch request
+        let userFetchRequest = NSFetchRequest<User>(entityName: "User")
+        
+        //Add two sort descriptors
+        let sortByFirstName = NSSortDescriptor.init(key: "firstName", ascending: true)
+        let sortBySecondName = NSSortDescriptor.init(key: "secondName", ascending: true)
+        
+        //filter using predicate
+        userFetchRequest.sortDescriptors = [sortByFirstName,sortBySecondName]
+        
+        do {
+            let users = try managedObjectContext.fetch(userFetchRequest)
+            
+            for user in users {
+                print("User First Name \(String(describing: user.firstName ?? "Default Value"))")
+                print("User Second Name \(String(describing: user.secondName ?? "Default Value"))")
+                print("\n\n\n")
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
+        }
+    }
+    
+    func fetchRequestResultTypeManagedObject() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create fetch request
+        let userFetchRequest = NSFetchRequest<User>(entityName: "User")
+        
+        //Define result type
+        userFetchRequest.resultType = .managedObjectResultType
+        
+        do {
+            let users: [User] = try managedObjectContext.fetch(userFetchRequest)
+            
+            for user in users {
+                let firstName = user.firstName
+                print("Object return \(user)")
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
+        }
+    }
+    
+    func fetchRequestResultTypeDictionary() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create fetch request
+        let userFetchRequest = NSFetchRequest<NSDictionary>(entityName: "User")
+        
+        //Define result type
+        userFetchRequest.resultType = .dictionaryResultType
+        
+        do {
+            let users: [NSDictionary] = try managedObjectContext.fetch(userFetchRequest)
+            
+            for user in users {
+                print("User First Name \(String(describing: user["firstName"] ?? "Default Value"))")
+                print("User Second Name \(String(describing: user["secondName"] ?? "Default Value"))")
+                print("\n\n\n")
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
+        }
+    }
+    
+    func fetchRequestResultCount() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create fetch request
+        let userFetchRequest = NSFetchRequest<NSNumber>(entityName: "User")
+        
+        //Define result type
+        userFetchRequest.resultType = .countResultType
+        
+        do {
+            let counts: [NSNumber] = try managedObjectContext.fetch(userFetchRequest)
+            
+            for count in counts {
+                print(count)
+                print("\n\n\n")
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
+        }
+    }
+    
+    func fetchRequestResultObjectId() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        
+        //Create fetch request
+        let userFetchRequest = NSFetchRequest<NSManagedObjectID>(entityName: "User")
+        
+        //Define result type
+        userFetchRequest.resultType = .managedObjectIDResultType
+        
+        do {
+            let objectIds: [NSManagedObjectID] = try managedObjectContext.fetch(userFetchRequest)
+            
+            for objectId in objectIds {
+                print(objectId)
+                print("\n\n\n")
+            }
+        } catch let error as NSError {
+            print("Could not fetch \(error)")
         }
     }
 
