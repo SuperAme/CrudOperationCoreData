@@ -36,7 +36,8 @@ class ViewController: UIViewController {
 //        propertiesToFetch()
 //        fetchLimit()
 //        insertTenThousandsUserObject()
-        fetchUsingBatchWithLimitAndOffset()
+//        fetchUsingBatchWithLimitAndOffset()
+        addTwoUsersPart11()
     }
 
     func addToDoTask() {
@@ -691,6 +692,44 @@ class ViewController: UIViewController {
         } catch let error as NSError {
             print("Could not fetch \(error)")
         }
+    }
+    
+    func addTwoUsersPart11() {
+        //get reference to app delegate singleton instance
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let managedObjectContext = appDelegate.persistentContainer.viewContext
+        let userFetchRequest = NSFetchRequest<User>(entityName: "User")
+        
+        DispatchQueue.global(qos: .background).async {
+            print("Background thread")
+            print("Executing Background thread")
+            
+            print("\(Thread.current)\n\n")
+            
+            managedObjectContext.perform {
+                print("\(Thread.current)\n\n")
+                print("Switched Main Thread")
+                
+                //Create Users object
+                
+                let user = User(context: managedObjectContext)
+                user.secondName = "User one Second Name"
+                user.firstName = "Ali"
+                
+                let secondUser = User(context: managedObjectContext)
+                secondUser.secondName = "User Two Second Name"
+                secondUser.firstName = "Not Ali"
+                
+                do {
+                    try managedObjectContext.save()
+                } catch let error as NSError {
+                    print("Could not save \(error)")
+                }
+            }
+        }
+        
     }
 
 }
