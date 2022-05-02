@@ -37,7 +37,9 @@ class ViewController: UIViewController {
 //        fetchLimit()
 //        insertTenThousandsUserObject()
 //        fetchUsingBatchWithLimitAndOffset()
-        addTwoUsersPart11()
+//        addTwoUsersPart11()
+//        notificationInsertFired()
+        notificationUpdateFired()
     }
 
     func addToDoTask() {
@@ -729,6 +731,89 @@ class ViewController: UIViewController {
                 }
             }
         }
+        
+    }
+    
+    func notificationInsertFired() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let mainQueueContext = appDelegate.persistentContainer.viewContext
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(contextObjectsDidChange(_:)), name: Notification.Name.NSManagedObjectContextObjectsDidChange, object: mainQueueContext)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(contextWillSave(_:)), name: Notification.Name.NSManagedObjectContextWillSave, object: mainQueueContext)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave(_:)), name: Notification.Name.NSManagedObjectContextDidSave, object: mainQueueContext)
+        
+        mainQueueContext.performAndWait {
+            let newUser = User(context: mainQueueContext)
+            newUser.secondName = "user One Second Name"
+            newUser.firstName = "ali"
+            
+            do {
+                try mainQueueContext.save()
+            } catch let error as NSError {
+                print("Could not save \(error)")
+            }
+        }
+    }
+    
+    func notificationUpdateFired() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        //We need context from container Entity needs context to create in this managedObjectContext
+        let mainQueueContext = appDelegate.persistentContainer.viewContext
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(contextObjectsDidChange(_:)), name: Notification.Name.NSManagedObjectContextObjectsDidChange, object: mainQueueContext)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(contextWillSave(_:)), name: Notification.Name.NSManagedObjectContextWillSave, object: mainQueueContext)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(contextDidSave(_:)), name: Notification.Name.NSManagedObjectContextDidSave, object: mainQueueContext)
+        
+        let userFetchRequest = NSFetchRequest<User>(entityName: "User")
+        mainQueueContext.performAndWait {
+            let usersOfMainContext: [User] = try! mainQueueContext.fetch(userFetchRequest)
+            usersOfMainContext[0].secondName = "Updated User One Second Name"
+            usersOfMainContext[0].firstName = "Updated ali"
+            
+            do {
+                try mainQueueContext.save()
+            } catch let error as NSError {
+                print("Could not save \(error)")
+            }
+        }
+    }
+    
+    @objc func contextObjectsDidChange(_ notification: Notification) {
+        guard let userInfo = notification.userInfo else { return }
+        
+        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
+            print("--- INSERTS ---")
+            print(inserts)
+            print("+++++++++++++++")
+        }
+        
+        if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject>, updates.count > 0 {
+            print("--- Updates ---")
+            for update in updates {
+                print(update.changedValues())
+            }
+            print("+++++++++++++++")
+        }
+        
+        if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
+            print("--- DELETES ---")
+            print(deletes)
+            print("+++++++++++++++")
+        }
+    }
+    
+    @objc func contextWillSave(_ notification: Notification) {
+        
+    }
+    
+    @objc func contextDidSave(_ notification: Notification) {
         
     }
 
